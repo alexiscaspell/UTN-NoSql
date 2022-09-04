@@ -6,22 +6,43 @@ HSET usuarios:3 contraseña 789 nombre jesus apellido ferrere mail yisus@gmail.c
 echo "INSERCION DE PELICULAS"
 HSET peliculas:1 nombre "la mascara" director "ace ventura" año_estreno 1994 contador_comentarios 0
 HSET peliculas:2 nombre jumanji director "morgan freeman" año_estreno 1982 contador_comentarios 0
-HSET peliculas:3 nombre "la pasion de cristo" director "bill murray" año_estreno 2003 contador_comentarios 1
+HSET peliculas:3 nombre "la pasion de cristo" director "bill murray" año_estreno 2003 contador_comentarios 4
+HSET peliculas:4 nombre "locos por marry" director "ben stiller" año_estreno 1998 contador_comentarios 0
+HSET peliculas:5 nombre "la ventana indiscreta" director "quentin tarantino" año_estreno 1964 contador_comentarios 0
+HSET peliculas:6 nombre "burns el rey de reyes" director "steven spielbergo" año_estreno 2001 contador_comentarios 0
+HSET peliculas:7 nombre "xxxx: mision caliente 10" director "sofia coppola" año_estreno 2005 contador_comentarios 0
+HSET peliculas:8 nombre "papa por accidente" director "jason bateman" año_estreno 2012 contador_comentarios 0
+HSET peliculas:9 nombre "se me acaban las ideas" director "adam happier" año_estreno 2002 contador_comentarios 0
+HSET peliculas:10 nombre "rocky 7: la venganza de adrian" director "bartolomeo simpson" año_estreno 1991 contador_comentarios 0
+HSET peliculas:11 nombre "volver al pasado" director "marty mcfly" año_estreno 1984 contador_comentarios 0
 
 echo "INSERCION DE COMENTARIOS"
 SET comentarios:3:3:1 "yo aparezco en esa pelicula"
 SET comentarios:3:1:2 "que loco como lo garcaron a jesu"
+SET comentarios:3:3:3 "como sufri en esa peli"
+SET comentarios:3:2:4 "me gusto el principio y el final"
 
 echo "INSERCION DE PELICULAS VIEJAS"
 
 ZADD peliculas_viejas 1994 "la mascara"
 ZADD peliculas_viejas 1982 jumanji 
 ZADD peliculas_viejas 2003 "la pasion de cristo"
+ZADD peliculas_viejas 1998 "locos por marry"
+ZADD peliculas_viejas 1964 "la ventana indiscreta"
+ZADD peliculas_viejas 2001 "burns el rey de reyes"
+ZADD peliculas_viejas 2005 "xxxx: mision caliente 10"
+ZADD peliculas_viejas 2012 "papa por accidente"
+ZADD peliculas_viejas 2002 "se me acaban las ideas" 
+ZADD peliculas_viejas 1991 "rocky 7: la venganza de adrian"
+ZADD peliculas_viejas 1984 "volver al pasado"
+
 
 echo "INSERCION DE ULTIMOS 3 COMENTARIOS PELICULAS"
 
 LPUSH comentarios_usuarios:3 3
 LPUSH comentarios_usuarios:3 1
+LPUSH comentarios_usuarios:3 3
+LPUSH comentarios_usuarios:3 2
 
 echo "INSERCION DE MAILS USUARIOS"
 
@@ -39,14 +60,14 @@ HSET usuarios:4 contraseña 91011 nombre salamin apellido conqueso mail picadell
 
 echo "CREAR PELICULA"
 
-HSET peliculas:4 nombre "mortal kombat" director "subnine" año_estreno 2021 contador_comentarios 0
+HSET peliculas:12 nombre "mortal kombat" director "subnine" año_estreno 2021 contador_comentarios 0
 
 echo "CREAR COMENTARIO"
 
-SET comentarios:4:2:2 "no me gusto, muy violenta"
-PFADD peliculas_comentadas 2
-LPUSH comentarios_usuarios:4 2
-
+SET comentarios:12:2:2 "no me gusto, muy violenta"
+PFADD peliculas_comentadas 12
+LPUSH comentarios_usuarios:12 2
+HINCRBY peliculas:12 contador_comentarios 1
 
 echo "CONOCER 10 PELIS MAS VIEJAS"
 
@@ -62,7 +83,7 @@ PFCOUNT peliculas_comentadas
 
 echo "CONOCER CANTIDAD COMENTARIOS PELICULA la pasion de cristo"
 
-LLEN comentarios_usuarios:3
+HGET peliculas:3 contador_comentarios
 
 echo "LISTAR TODOS LOS MAILS"
 
