@@ -1,0 +1,70 @@
+echo "INSERCION DE USUARIOS"
+HSET usuarios:1 contraseña 123 nombre pepe apellido carrol mail pepeargento@gmail.com
+HSET usuarios:2 contraseña 456 nombre marisa apellido pisa mail muzza@gmail.com
+HSET usuarios:3 contraseña 789 nombre jesus apellido ferrere mail yisus@gmail.com
+
+echo "INSERCION DE PELICULAS"
+HSET peliculas:1 nombre "la mascara" director "ace ventura" año_estreno 1994 contador_comentarios 0
+HSET peliculas:2 nombre jumanji director "morgan freeman" año_estreno 1982 contador_comentarios 0
+HSET peliculas:3 nombre "la pasion de cristo" director "bill murray" año_estreno 2003 contador_comentarios 1
+
+echo "INSERCION DE COMENTARIOS"
+SET comentarios:3:3:1 "yo aparezco en esa pelicula"
+SET comentarios:3:1:2 "que loco como lo garcaron a jesu"
+
+echo "INSERCION DE PELICULAS VIEJAS"
+
+ZADD peliculas_viejas 1994 "la mascara"
+ZADD peliculas_viejas 1982 jumanji 
+ZADD peliculas_viejas 2003 "la pasion de cristo"
+
+echo "INSERCION DE ULTIMOS 3 COMENTARIOS PELICULAS"
+
+LPUSH comentarios_usuarios:3 3
+LPUSH comentarios_usuarios:3 1
+
+echo "INSERCION DE MAILS USUARIOS"
+
+SADD mails_usuarios pepeargento@gmail.com muzza@gmail.com yisus@gmail.com
+
+echo "INSERCION DE PELICULAS COMENTADAS"
+
+PFADD peliculas_comentadas 3
+
+echo "######################################################################"
+
+echo "CREAR USUARIO"
+
+HSET usuarios:4 contraseña 91011 nombre salamin apellido conqueso mail picadelli@gmail.com
+
+echo "CREAR PELICULA"
+
+HSET peliculas:4 nombre "mortal kombat" director "subnine" año_estreno 2021 contador_comentarios 0
+
+echo "CREAR COMENTARIO"
+
+SET comentarios:4:2:2 "no me gusto, muy violenta"
+PFADD peliculas_comentadas 2
+LPUSH comentarios_usuarios:4 2
+
+
+echo "CONOCER 10 PELIS MAS VIEJAS"
+
+ZRANGE peliculas_viejas 0 9
+
+echo "CONOCER LOS ULTIMOS 3 USUARIOS QUE COMENTARON la pasion de cristo"
+
+LRANGE comentarios_usuarios:3 0 2
+
+echo "CONOCER CANTIDAD PELICULAS COMENTADAS"
+
+PFCOUNT peliculas_comentadas
+
+echo "CONOCER CANTIDAD COMENTARIOS PELICULA la pasion de cristo"
+
+LLEN comentarios_usuarios:3
+
+echo "LISTAR TODOS LOS MAILS"
+
+SMEMBERS mails_usuarios
+
